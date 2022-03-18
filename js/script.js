@@ -1,16 +1,17 @@
 (function (){
-    const $ = q => document.querySelector(q);
 
-    function convertPeriod (mil) {
+    const $ = q => document.querySelector(q); /* CAPTURAR ELEMENTOS DO HTML, REDUZIR A ESCRITA DO DOCUMENT..ETC*/ 
+
+    function convertPeriod (mil) {   /*CONVERTER DATA EM DEIXANDO APENAS MINUTOS E SEGUNDOS */
         const min = Math.floor(mil / 60000);
         const sec = Math.floor((mil % 60000) / 1000);
 
         return `${min}m e ${sec}s`
     }
 
-    function renderGarage() {
+    function renderGarage() { /*MOSTRAR NA TELA UM OS VEICULOS CADASTRADO */ 
         const garage = getGarage();
-
+        $("#garage").innerHTML = "";
         garage.forEach(c => addGararge(c))
     }
 
@@ -42,12 +43,14 @@
         .
         Deseja encerrar ?`;
 
-        if(confirm(msg)) return;
+        if(!confirm(msg)) return;
 
-        const garage = getGarage(). filter(c => c.licence !== licence);
+        const garage = getGarage().filter(c => c.licence !== licence);
         localStorage.garage = JSON.stringify(garage);
 
         console.log(licence, garage);
+        
+        renderGarage();
     }
 
     const getGarage = () => localStorage.garage ? JSON.parse(localStorage.garage) : [];
